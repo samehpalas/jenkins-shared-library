@@ -8,17 +8,32 @@ class Docker implements Serializable {
         this.script = script
     }
 
-    def buildDocker (String imgName) {
-
+   /* collective groovy class/ the function that has all logic/info centerally in this class
+   def buildDocker (String imgName) {
         script.echo 'Building the docker image... '
-        script.withCredentials([usernamePassword(credentialsId: 'sameh-dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')])
+        script.withCredentials([script.usernamePassword(credentialsId: 'sameh-dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')])
                 {
                     script.sh  "docker build -t $imgName simplefile_Examples/com-pipeline/ "
                     script.sh  " echo $script.PASS | docker login -u $script.USER --password-stdin "
                     script.sh  " docker push $imgName "
                 }
+    } */
+  // Next: separate groovy classes:
 
+    def dockerbuild (String imgName) {
+         script.sh  "docker build -t $imgName simplefile_Examples/com-pipeline/ "
     }
 
+    def dockerLogin () {
+        script.withCredentials([script.usernamePassword(credentialsId: 'sameh-dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')])
+           {
+              script.sh " echo $script.PASS | docker login -u $script.USER --password-stdin "
+
+                }
+    }
+
+    def buildpush (String imgName) {
+                        script.sh  " docker push $imgName "
+                    }
 
 }
