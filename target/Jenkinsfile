@@ -51,9 +51,9 @@ pipeline {
               script {  //commit version update
                withCredentials([usernamePassword(credentialsId: 'sameh-gihub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) { //credentials
                  sh 'git init'
+                 sh 'git config --global user.name "jenkins"'  // Set the Git user information that will push
+                 sh 'git config --global user.email "jenkins@example.com"'
                  sh "git remote set-url origin https://${USER}:${PASS}@github.com/samehpalas/jenkins-shared-library.git"  //pushing to remote repo
-                 sh 'git config user.name "jenkins"'  // Set the Git user information that will push
-                 sh 'git config user.email "jenkins@example.com"'
                  sh 'git add .'
                  sh 'git commit -m "ci : version commit bump "'
                  sh 'git push origin HEAD:main'
