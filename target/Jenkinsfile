@@ -43,7 +43,8 @@ pipeline {
             }
             steps {
                 echo 'Deploying the Application... '
-                sh 'kubectl create deployment nginx-web --image=nginx'
+               // sh 'kubectl create deployment nginx-web --image=nginx'
+                sh " envsubst < kubernetes/deployment.yaml | kubectl apply -f -"
             }
         }
        // stage ('modify and push') {
