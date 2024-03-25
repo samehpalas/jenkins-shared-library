@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying the Application... '
-                sh 'kubectl create deployment nginx-web --image=nginx'
+                //sh 'kubectl create deployment nginx-web --image=nginx'
             }
         }
         stage ('modify and push') {
